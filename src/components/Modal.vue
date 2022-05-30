@@ -1,4 +1,9 @@
 <script setup>
+
+const props = defineProps({
+    title: String
+})
+
 </script>
 
 <template>
@@ -9,6 +14,7 @@
                     <span class="close-btn">X</span>
                 </div>
             </div>
+            <h1 class="title text-align-center">{{ title }}</h1>
             <div class="wrapper">
                 <slot />
             </div>
@@ -53,5 +59,9 @@
 
 .close-btn:hover {
     color: black;
+}
+
+.title {
+    margin-bottom: 10px;
 }
 </style>

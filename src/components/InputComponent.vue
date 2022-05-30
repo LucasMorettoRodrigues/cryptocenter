@@ -1,15 +1,17 @@
 <script setup>
 
 const props = defineProps({
-    name: String
+    label: String,
+    type: String,
+    value: String,
 })
 
 </script>
 
 <template>
     <div class="flex">
-        <label :for="name">{{ name }}</label>
-        <input :id="name" :type="type" @change="$emit('customChange', $event.target.value)">
+        <label :for="label">{{ label }}</label>
+        <input step="any" :id="label" :type="type" @change="$emit('customChange', $event.target.value)" :value="value">
     </div>
 </template>
 

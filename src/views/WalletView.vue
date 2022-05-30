@@ -1,47 +1,26 @@
 <template>
     <main class="main-container">
 
-        <Modal v-if="showModal" @close="handleClose">
+        <Modal v-if="showModal" title="Buy" @close="handleClose">
             <form @submit="handleBuy">
-                <h1 class="text-align-center">Buy</h1>
-                <div class="flex column input">
-                    <label for="name">Name</label>
-                    <input id="name" type="text" v-model="name">
-                </div>
-                <div class="flex column input">
-                    <label for="amount">Amount</label>
-                    <input id="amount" type="number" v-model="amount">
-                </div>
+                <InputComponent label="Name" type="string" @customChange="changeName" />
+                <InputComponent label="Amount" type="number" @customChange="changeAmount" />
                 <ButtonComponent text="Buy" type="submit" />
             </form>
         </Modal>
 
-        <Modal v-if="showBuyModal" @close="handleClose">
+        <Modal v-if="showBuyModal" title="Buy" @close="handleClose">
             <form @submit="handleBuy">
-                <h1 class="text-align-center">Buy</h1>
-                <div class="flex column input">
-                    <label for="name">Name</label>
-                    <input disabled id="name" type="text" :value="this.name">
-                </div>
-                <div class="flex column input">
-                    <label for="amount">Amount</label>
-                    <input id="amount" step='any' type="number" v-model="amount">
-                </div>
+                <InputComponent label="Name" type="string" @customChange="changeName" :value="this.name" />
+                <InputComponent label="Amount" type="number" @customChange="changeAmount" />
                 <ButtonComponent text="Buy" type="submit" />
             </form>
         </Modal>
 
-        <Modal v-if="showSellModal" @close="handleClose">
+        <Modal v-if="showSellModal" title="Sell" @close="handleClose">
             <form @submit="handleSell">
-                <h1 class="text-align-center">Sell</h1>
-                <div class="flex column input">
-                    <label for="name">Name</label>
-                    <input disabled id="name" type="text" :value="this.name">
-                </div>
-                <div class="flex column input">
-                    <label for="amount">Amount</label>
-                    <input id="amount" step='any' type="number" v-model="amount">
-                </div>
+                <InputComponent label="Name" type="string" @customChange="changeName" :value="this.name" />
+                <InputComponent label="Amount" type="number" @customChange="changeAmount" />
                 <ButtonComponent text="Sell" type="submit" />
             </form>
         </Modal>
@@ -118,6 +97,10 @@ export default {
                 return console.log('Missing fields.')
             }
 
+            if (this.amount <= 0) {
+                return console.log('Invalid Amount.')
+            }
+
             const coin = this.wallet.find(item => item.name === this.name)
 
             if (!coin) {
@@ -171,6 +154,9 @@ export default {
         },
         changeName(event) {
             this.name = event
+        },
+        changeAmount(event) {
+            this.amount = event
         },
         changeBalance(event) {
             this.balance = event
