@@ -3,25 +3,31 @@
 
         <Modal v-if="showModal" title="Buy" @close="handleClose">
             <form @submit="handleBuy">
-                <InputComponent label="Name" type="string" @customChange="changeName" />
-                <InputComponent label="Amount" type="number" @customChange="changeAmount" />
-                <ButtonComponent text="Buy" type="submit" />
+                <InputComponent label="Name" type="string" v-model="name" />
+                <InputComponent label="Amount" type="number" step="any" v-model="amount" />
+                <div class="btn-container">
+                    <ButtonComponent text="Buy" type="submit" />
+                </div>
             </form>
         </Modal>
 
         <Modal v-if="showBuyModal" title="Buy" @close="handleClose">
             <form @submit="handleBuy">
-                <InputComponent label="Name" type="string" @customChange="changeName" :value="this.name" />
-                <InputComponent label="Amount" type="number" @customChange="changeAmount" />
-                <ButtonComponent text="Buy" type="submit" />
+                <InputComponent label="Name" type="string" v-model="name" />
+                <InputComponent label="Amount" type="number" step="any" v-model="amount" />
+                <div class="btn-container">
+                    <ButtonComponent text="Buy" type="submit" />
+                </div>
             </form>
         </Modal>
 
         <Modal v-if="showSellModal" title="Sell" @close="handleClose">
             <form @submit="handleSell">
-                <InputComponent label="Name" type="string" @customChange="changeName" :value="this.name" />
-                <InputComponent label="Amount" type="number" @customChange="changeAmount" />
-                <ButtonComponent text="Sell" type="submit" />
+                <InputComponent label="Name" type="string" v-model="name" />
+                <InputComponent label="Amount" type="number" step="any" v-model="amount" />
+                <div class="btn-container">
+                    <ButtonComponent text="Sell" type="submit" />
+                </div>
             </form>
         </Modal>
 
@@ -44,7 +50,7 @@
                                 0) * 100).toFixed(2)
                         }} % </li>
                         <li class="balance">{{ formatter.format(item.balance) }}</li>
-                        <li class="btn-container flex ">
+                        <li class="flex">
                             <button class="btn green" @click="() => handleOpenBuyModal(item)">Buy</button>
                             <button class="btn red" @click="() => handleOpenSellModal(item)">Sell</button>
                         </li>
@@ -60,13 +66,15 @@
 import InputComponent from '../components/InputComponent.vue';
 import Modal from '../components/Modal.vue';
 import ButtonComponent from '../components/ButtonComponent.vue';
+import BuyForm from '../components/BuyForm.vue';
 
 export default {
     name: "HomeView",
     components: {
         InputComponent,
         Modal,
-        ButtonComponent
+        ButtonComponent,
+        BuyForm
     },
     data() {
         return {
@@ -110,7 +118,7 @@ export default {
 
             // Update coin balance
             this.wallet = this.wallet.map(item => item.name === this.name
-                ? { ...item, balance: this.balance + this.amount }
+                ? { ...item, balance: Number(this.balance) + Number(this.amount) }
                 : item
             )
 
@@ -170,6 +178,9 @@ export default {
             this.name = coin.name
             this.balance = coin.balance
             this.showSellModal = true
+        },
+        teste(event) {
+            console.log(event)
         }
     }
 }
@@ -260,5 +271,9 @@ export default {
 .btn.red:hover {
     background-color: red;
     color: white;
+}
+
+.btn-container {
+    margin-top: 5px;
 }
 </style>

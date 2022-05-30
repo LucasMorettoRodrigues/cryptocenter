@@ -2,8 +2,10 @@
 
 const props = defineProps({
     label: String,
-    type: String,
-    value: String,
+    modelValue: {
+        type: [String, Number],
+        default: ''
+    },
 })
 
 </script>
@@ -11,7 +13,8 @@ const props = defineProps({
 <template>
     <div class="flex">
         <label :for="label">{{ label }}</label>
-        <input step="any" :id="label" :type="type" @change="$emit('customChange', $event.target.value)" :value="value">
+        <input v-bind="$attrs" :id="label" :value="modelValue"
+            @input="$emit('update:modelValue', $event.target.value)" />
     </div>
 </template>
 
