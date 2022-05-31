@@ -146,14 +146,11 @@ export default {
                 : item
             )
 
-            console.log(this.wallet)
-
             this.handleClose()
             this.cleanFields()
         },
         handleSell(e) {
             e.preventDefault()
-            console.log(this.balance, this.amount)
             if (!this.name || !this.balance || !this.amount) {
                 return console.log('Missing fields.')
             }
@@ -171,8 +168,6 @@ export default {
                     ? { ...item, balance: Number((this.balance - this.amount).toFixed(2)) }
                     : item
                 )
-
-                console.log(this.wallet)
             }
 
             this.handleClose()
@@ -208,9 +203,6 @@ export default {
             this.balance = coin.balance
             this.showSellModal = true
         },
-        teste(event) {
-            console.log(event)
-        },
         async getData() {
             try {
                 const data = await axios.get("http://localhost:3000/api/v1/cryptocurrency/listings/latest", {
@@ -219,7 +211,6 @@ export default {
                     }
                 })
                 this.data = data.data.data
-                console.log(this.data.find(i => i.name === 'Bitcoin').quote.USD.price)
             } catch (error) {
                 console.log(error)
             }
