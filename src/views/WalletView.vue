@@ -66,7 +66,6 @@
 import InputComponent from '../components/InputComponent.vue';
 import Modal from '../components/Modal.vue';
 import ButtonComponent from '../components/ButtonComponent.vue';
-import BuyForm from '../components/BuyForm.vue';
 
 export default {
     name: "HomeView",
@@ -74,7 +73,6 @@ export default {
         InputComponent,
         Modal,
         ButtonComponent,
-        BuyForm
     },
     data() {
         return {
