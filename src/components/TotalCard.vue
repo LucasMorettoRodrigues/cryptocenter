@@ -1,7 +1,13 @@
 <script setup>
 
 const props = defineProps({
-    text: String,
+    wallet: Object,
+    data: Object
+})
+
+const formatter = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
 })
 
 </script>
@@ -9,8 +15,17 @@ const props = defineProps({
 <template>
     <div class="total-container">
         <div class="total-card">
-            <h2>Total in Assets:</h2>
-            <h1>{{ text }}</h1>
+            <div>
+                <h2>Number of Assets:</h2>
+                <h1>{{ wallet.length }}</h1>
+            </div>
+            <div class="bottom-container">
+                <h2>Total in Assets:</h2>
+                <h1>{{ formatter.format(this.wallet.reduce((s, i) => s + (i.balance * this.data.find(j => j.name
+                        === i.name).quote.USD.price), 0))
+                }}</h1>
+            </div>
+
         </div>
     </div>
 </template>
@@ -30,7 +45,6 @@ const props = defineProps({
 }
 
 .total-card h2 {
-    margin-bottom: 20px;
     font-size: 26px;
     color: #555;
 }
@@ -38,5 +52,13 @@ const props = defineProps({
 .total-card h1 {
     font-size: 40px;
     color: #111;
+}
+
+.total-card h1:first-child {
+    margin-bottom: 20px;
+}
+
+.bottom-container {
+    margin-top: 20px;
 }
 </style>

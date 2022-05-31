@@ -39,8 +39,7 @@
             </div>
 
             <div v-if="this.data" class="flex">
-                <TotalCard :text="formatter.format(this.wallet.reduce((s, i) => s + (i.balance * this.data.find(j => j.name
-                === i.name).quote.USD.price), 0))" />
+                <TotalCard :wallet="this.wallet" :data="this.data" />
                 <div class="right">
                     <PieChart :serie="this.wallet.map(item => (item.balance * this.data.find(i => i.name ===
                     item.name).quote.USD.price))" :label="this.wallet.map(item => item.name)" />
