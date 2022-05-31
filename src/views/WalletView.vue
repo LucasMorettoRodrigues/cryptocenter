@@ -37,7 +37,7 @@
                 <ButtonComponent text='Buy New Asset' @click="showModal = true" />
             </div>
 
-            <PieChart :series="wallet.map(item => item.balance)" :labels="wallet.map(item => item.name)" />
+            <PieChart :serie="this.wallet.map(item => item.balance)" :label="this.wallet.map(item => item.name)" />
 
             <ul class="item-info flex align-center">
                 <li>Name</li>
@@ -124,6 +124,8 @@ export default {
                 ? { ...item, balance: Number(this.balance) + Number(this.amount) }
                 : item
             )
+
+            console.log(this.wallet)
 
             this.handleClose()
             this.cleanFields()

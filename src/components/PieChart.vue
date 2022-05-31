@@ -7,10 +7,10 @@
 <script>
 export default {
     props: {
-        series: {
+        serie: {
             type: Array
         },
-        labels: {
+        label: {
             type: Array
         },
     },
@@ -20,7 +20,7 @@ export default {
                 chart: {
                     type: 'donut',
                 },
-                labels: this.labels,
+                labels: this.label,
                 responsive: [{
                     breakpoint: 480,
                     options: {
@@ -33,9 +33,17 @@ export default {
                     }
                 }]
             },
-            series: this.series
+            series: this.serie
         };
     },
+    watch: {
+        serie() {
+            this.series = this.serie
+        },
+        label() {
+            this.chartOptions = { ...this.chartOptions, labels: this.label }
+        }
+    }
 };
 </script>
 
