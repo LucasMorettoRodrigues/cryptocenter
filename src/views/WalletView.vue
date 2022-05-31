@@ -37,9 +37,29 @@
                 <ButtonComponent text='Buy New Asset' @click="showModal = true" />
             </div>
 
-            <PieChart v-if="this.data" :serie="this.wallet.map(item => (item.balance * this.data.find(i => i.name ===
-            item.name).quote.USD.price))" :label="this.wallet.map(item => item.name)" />
-            <PieChart v-else="this.data" :serie="[1]" :label="['One']" />
+            <div v-if="this.data" class="top-container flex">
+                <div class="top-container-item">
+                    <div class="total-box">
+                        <h2>Total in Assets:</h2>
+                        <h1>{{ formatter.format(this.wallet.reduce((s, i) => s + (i.balance * this.data.find(j => j.name
+                                ===
+                                i.name).quote.USD.price), 0))
+                        }}</h1>
+                    </div>
+                </div>
+                <div class="top-container-item">
+                    <PieChart :serie="this.wallet.map(item => (item.balance * this.data.find(i => i.name ===
+                    item.name).quote.USD.price))" :label="this.wallet.map(item => item.name)" />
+                </div>
+            </div>
+
+            <div v-else="this.data" class="top-container flex">
+                <div class="top-container-item">
+                </div>
+                <div class="top-container-item">
+                    <PieChart :serie="[1]" :label="['One']" />
+                </div>
+            </div>
 
             <ul class="item-info flex align-center">
                 <li>Name</li>
@@ -99,9 +119,9 @@ export default {
             }),
             wallet: [
                 { name: 'Bitcoin', balance: 1.023 },
-                { name: 'USD Coin', balance: 10000.00 },
-                { name: 'Ethereum', balance: 48 },
-                { name: 'Cardano', balance: 600.95 }
+                { name: 'USD Coin', balance: 14000.00 },
+                { name: 'Ethereum', balance: 8 },
+                { name: 'Cardano', balance: 10000 }
             ]
         }
     },
@@ -159,7 +179,6 @@ export default {
             }
 
             this.handleClose()
-            this.cleanFields()
         },
         cleanFields() {
             this.name = ''
@@ -170,6 +189,8 @@ export default {
             this.showModal = false
             this.showBuyModal = false
             this.showSellModal = false
+
+            this.cleanFields()
         },
         changeName(event) {
             this.name = event
@@ -218,6 +239,17 @@ export default {
     margin: 20px 0;
 }
 
+.top-container {
+    justify-content: space-evenly;
+}
+
+.top-container-item {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .wallet-section {
     padding: 20px 0;
     min-height: 78vh;
@@ -236,6 +268,7 @@ export default {
 
 .item-info {
     padding: 0;
+    margin-left: 10px;
     height: 100%;
 }
 
