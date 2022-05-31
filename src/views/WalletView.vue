@@ -61,28 +61,31 @@
                 </div>
             </div>
 
-            <ul class="item-info flex align-center">
-                <li>Name</li>
-                <li>Quantity</li>
-                <li>Balance (USD)</li>
-                <li></li>
-            </ul>
-            <ul class="wallet-list">
-                <li class="item-list" v-for="(item, index) in wallet" :key="index">
-                    <ul class="item-info flex align-center">
-                        <li class="name">{{ item.name }}</li>
-                        <li class="balance">{{ item.balance }}</li>
-                        <li class="balance">{{ this.data && formatter.format(this.data.find(i => i.name ===
-                                item.name).quote.USD.price *
-                                item.balance)
-                        }}</li>
-                        <li class="flex">
-                            <button class="btn green" @click="() => handleOpenBuyModal(item)">Buy</button>
-                            <button class="btn red" @click="() => handleOpenSellModal(item)">Sell</button>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
+            <div class="wallet">
+                <ul class="item-info flex align-center">
+                    <li>Name</li>
+                    <li>Quantity</li>
+                    <li>Balance (USD)</li>
+                    <li></li>
+                </ul>
+                <ul class="wallet-list">
+                    <li class="item-list" v-for="(item, index) in wallet" :key="index">
+                        <ul class="item-info flex align-center">
+                            <li class="name">{{ item.name }}</li>
+                            <li class="balance">{{ item.balance }}</li>
+                            <li class="balance">{{ this.data && formatter.format(this.data.find(i => i.name ===
+                                    item.name).quote.USD.price *
+                                    item.balance)
+                            }}</li>
+                            <li class="flex">
+                                <button class="btn green" @click="() => handleOpenBuyModal(item)">Buy</button>
+                                <button class="btn red" @click="() => handleOpenSellModal(item)">Sell</button>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+
         </section>
 
     </main>
@@ -248,6 +251,27 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.total-box {
+    background-color: rgb(233, 233, 233);
+    padding: 50px 80px;
+    border-radius: 5px;
+}
+
+.total-box h2 {
+    margin-bottom: 20px;
+    font-size: 26px;
+    color: #555;
+}
+
+.total-box h1 {
+    font-size: 40px;
+    color: #111;
+}
+
+.wallet {
+    padding: 20px 0;
 }
 
 .wallet-section {
