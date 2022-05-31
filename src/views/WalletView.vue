@@ -36,6 +36,9 @@
                 <h1>My Wallet</h1>
                 <ButtonComponent text='Buy New Asset' @click="showModal = true" />
             </div>
+
+            <PieChart :series="wallet.map(item => item.balance)" :labels="wallet.map(item => item.name)" />
+
             <ul class="item-info flex align-center">
                 <li>Name</li>
                 <li>% of Balance</li>
@@ -63,13 +66,15 @@
 </template>
 
 <script>
+import PieChart from '../components/PieChart.vue';
 import InputComponent from '../components/InputComponent.vue';
 import Modal from '../components/Modal.vue';
 import ButtonComponent from '../components/ButtonComponent.vue';
 
 export default {
-    name: "HomeView",
+    name: "WalletView",
     components: {
+        PieChart,
         InputComponent,
         Modal,
         ButtonComponent,
@@ -90,7 +95,7 @@ export default {
             }),
             wallet: [
                 { name: 'Bitcoin', balance: 15201.01 },
-                { name: 'USDCoin', balance: 10000.00 },
+                { name: 'USD Coin', balance: 10000.00 },
                 { name: 'Ethereum', balance: 1200.52 },
                 { name: 'Cardano', balance: 600.95 }
             ]

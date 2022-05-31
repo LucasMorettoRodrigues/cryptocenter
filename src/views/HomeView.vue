@@ -4,13 +4,15 @@
       <h1>Market Cap</h1>
       <table class="coins-table">
         <tr class="coins-table-tr">
-          <th class="th">Name</th>
+          <th>#</th>
+          <th>Name</th>
           <th>Price</th>
           <th>Market Cap</th>
           <th>24h %</th>
           <th>7d %</th>
         </tr>
         <tr class="coins-table-item" v-for="(item, index) in data" :key="index">
+          <td>{{ index + 1 }}</td>
           <td class="name">{{ item.name }} <span class="symbol">{{ item.symbol }}</span></td>
           <td>{{ formatter.format(item.quote.USD.price) }}</td>
           <td>{{ formatter.format(item.quote.USD.market_cap).slice(0, -3) }}</td>
@@ -100,7 +102,7 @@ table {
 
 .coins-table .name {
   font-size: 15px;
-  padding: 5px 0;
+  padding: 10px 0;
 }
 
 .coins-table .symbol {
