@@ -147,9 +147,11 @@ export default {
             } else {
                 // Update coin balance
                 this.wallet = this.wallet.map(item => item.name === this.name
-                    ? { ...item, balance: (this.balance - this.amount).toFixed(2) }
+                    ? { ...item, balance: Number((this.balance - this.amount).toFixed(2)) }
                     : item
                 )
+
+                console.log(this.wallet)
             }
 
             this.handleClose()
