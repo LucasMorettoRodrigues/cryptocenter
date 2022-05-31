@@ -4,7 +4,7 @@
 <template>
     <footer>
         <div class="main-container">
-            <p>Footer &copy; 2022</p>
+            <p>CryptoCenter &copy; 2022</p>
         </div>
     </footer>
 </template>
