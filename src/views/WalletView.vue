@@ -13,7 +13,7 @@
 
         <Modal v-if="showBuyModal" title="Buy" @close="handleClose">
             <form @submit="handleBuy">
-                <SelectComponent disabled label="Name" v-model="name" :options="this.data.map(i => i.name)" />
+                <SelectComponent label="Name" v-model="name" :options="this.data.map(i => i.name)" />
                 <InputComponent label="Amount" type="number" step="any" v-model="amount" />
                 <div class="btn-container">
                     <ButtonComponent text="Buy" type="submit" />
@@ -23,7 +23,7 @@
 
         <Modal v-if="showSellModal" title="Sell" @close="handleClose">
             <form @submit="handleSell">
-                <SelectComponent disabled label="Name" v-model="name" :options="this.data.map(i => i.name)" />
+                <SelectComponent label="Name" v-model="name" :options="this.data.map(i => i.name)" />
                 <InputComponent label="Amount" type="number" step="any" v-model="amount" />
                 <div class="btn-container">
                     <ButtonComponent text="Sell" type="submit" />
