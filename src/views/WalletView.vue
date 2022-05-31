@@ -46,13 +46,6 @@
                 </div>
             </div>
 
-            <div v-else="this.data" class="top-container flex">
-                <div class="left"></div>
-                <div class="right">
-                    <PieChart :serie="[1]" :label="['One']" />
-                </div>
-            </div>
-
             <div class="wallet">
                 <ul class="item-info flex align-center">
                     <li>Name</li>
