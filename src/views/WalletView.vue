@@ -3,7 +3,7 @@
 
         <Modal v-if="showModal" title="Buy" @close="handleClose">
             <form @submit="handleBuy">
-                <InputComponent label="Name" type="string" v-model="name" />
+                <SelectComponent label="Name" v-model="name" :options="this.data.map(i => i.name)" />
                 <InputComponent label="Amount" type="number" step="any" v-model="amount" />
                 <div class="btn-container">
                     <ButtonComponent text="Buy" type="submit" />
@@ -13,7 +13,7 @@
 
         <Modal v-if="showBuyModal" title="Buy" @close="handleClose">
             <form @submit="handleBuy">
-                <InputComponent label="Name" type="string" v-model="name" />
+                <SelectComponent label="Name" v-model="name" :options="this.data.map(i => i.name)" />
                 <InputComponent label="Amount" type="number" step="any" v-model="amount" />
                 <div class="btn-container">
                     <ButtonComponent text="Buy" type="submit" />
@@ -23,7 +23,7 @@
 
         <Modal v-if="showSellModal" title="Sell" @close="handleClose">
             <form @submit="handleSell">
-                <InputComponent label="Name" type="string" v-model="name" />
+                <SelectComponent label="Name" v-model="name" :options="this.data.map(i => i.name)" />
                 <InputComponent label="Amount" type="number" step="any" v-model="amount" />
                 <div class="btn-container">
                     <ButtonComponent text="Sell" type="submit" />
@@ -86,6 +86,7 @@
 import PieChart from '../components/PieChart.vue';
 import TotalCard from '../components/TotalCard.vue';
 import InputComponent from '../components/InputComponent.vue';
+import SelectComponent from '../components/SelectComponent.vue';
 import Modal from '../components/Modal.vue';
 import ButtonComponent from '../components/ButtonComponent.vue';
 import axios from 'axios';
@@ -96,6 +97,7 @@ export default {
         PieChart,
         TotalCard,
         InputComponent,
+        SelectComponent,
         Modal,
         ButtonComponent,
     },
@@ -136,9 +138,12 @@ export default {
             const coin = this.wallet.find(item => item.name === this.name)
 
             if (!coin) {
+                console.log('ak')
                 // Add coin to wallet
                 this.wallet.push({ name: this.name, balance: 0 })
             }
+
+            this.balance = coin.balance
 
             // Update coin balance
             this.wallet = this.wallet.map(item => item.name === this.name
