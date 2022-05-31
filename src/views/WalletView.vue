@@ -32,31 +32,24 @@
         </Modal>
 
         <section class="wallet-section">
+
             <div class="flex space-between header-container">
                 <h1>My Wallet</h1>
                 <ButtonComponent text='Buy New Asset' @click="showModal = true" />
             </div>
 
-            <div v-if="this.data" class="top-container flex">
-                <div class="top-container-item">
-                    <div class="total-box">
-                        <h2>Total in Assets:</h2>
-                        <h1>{{ formatter.format(this.wallet.reduce((s, i) => s + (i.balance * this.data.find(j => j.name
-                                ===
-                                i.name).quote.USD.price), 0))
-                        }}</h1>
-                    </div>
-                </div>
-                <div class="top-container-item">
+            <div v-if="this.data" class="flex">
+                <TotalCard :text="formatter.format(this.wallet.reduce((s, i) => s + (i.balance * this.data.find(j => j.name
+                === i.name).quote.USD.price), 0))" />
+                <div class="right">
                     <PieChart :serie="this.wallet.map(item => (item.balance * this.data.find(i => i.name ===
                     item.name).quote.USD.price))" :label="this.wallet.map(item => item.name)" />
                 </div>
             </div>
 
             <div v-else="this.data" class="top-container flex">
-                <div class="top-container-item">
-                </div>
-                <div class="top-container-item">
+                <div class="left"></div>
+                <div class="right">
                     <PieChart :serie="[1]" :label="['One']" />
                 </div>
             </div>
@@ -87,12 +80,12 @@
             </div>
 
         </section>
-
     </main>
 </template>
 
 <script>
 import PieChart from '../components/PieChart.vue';
+import TotalCard from '../components/TotalCard.vue';
 import InputComponent from '../components/InputComponent.vue';
 import Modal from '../components/Modal.vue';
 import ButtonComponent from '../components/ButtonComponent.vue';
@@ -102,6 +95,7 @@ export default {
     name: "WalletView",
     components: {
         PieChart,
+        TotalCard,
         InputComponent,
         Modal,
         ButtonComponent,
@@ -121,10 +115,11 @@ export default {
                 currency: 'USD',
             }),
             wallet: [
-                { name: 'Bitcoin', balance: 1.023 },
-                { name: 'USD Coin', balance: 14000.00 },
-                { name: 'Ethereum', balance: 8 },
-                { name: 'Cardano', balance: 10000 }
+                { name: 'Bitcoin', balance: 0.23 },
+                { name: 'USD Coin', balance: 4000.00 },
+                { name: 'Ethereum', balance: 1.02 },
+                { name: 'Cardano', balance: 2500 },
+                { name: 'BNB', balance: 3.55 }
             ]
         }
     },
@@ -242,32 +237,9 @@ export default {
     margin: 20px 0;
 }
 
-.top-container {
-    justify-content: space-evenly;
-}
-
-.top-container-item {
+.right,
+.left {
     flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.total-box {
-    background-color: rgb(233, 233, 233);
-    padding: 50px 80px;
-    border-radius: 5px;
-}
-
-.total-box h2 {
-    margin-bottom: 20px;
-    font-size: 26px;
-    color: #555;
-}
-
-.total-box h1 {
-    font-size: 40px;
-    color: #111;
 }
 
 .wallet {
