@@ -37,22 +37,25 @@
                 <ButtonComponent text='Buy New Asset' @click="showModal = true" />
             </div>
 
-            <PieChart :serie="this.wallet.map(item => item.balance)" :label="this.wallet.map(item => item.name)" />
+            <PieChart v-if="this.data" :serie="this.wallet.map(item => (item.balance * this.data.find(i => i.name ===
+            item.name).quote.USD.price))" :label="this.wallet.map(item => item.name)" />
+            <PieChart v-else="this.data" :serie="[1]" :label="['One']" />
 
             <ul class="item-info flex align-center">
                 <li>Name</li>
-                <li>% of Balance</li>
-                <li>Balance</li>
+                <li>Quantity</li>
+                <li>Balance (USD)</li>
                 <li></li>
             </ul>
             <ul class="wallet-list">
                 <li class="item-list" v-for="(item, index) in wallet" :key="index">
                     <ul class="item-info flex align-center">
                         <li class="name">{{ item.name }}</li>
-                        <li class="percentage">{{ (item.balance / wallet.reduce((sum, item) => sum + item.balance,
-                                0) * 100).toFixed(2)
-                        }} % </li>
-                        <li class="balance">{{ formatter.format(item.balance) }}</li>
+                        <li class="balance">{{ item.balance }}</li>
+                        <li class="balance">{{ this.data && formatter.format(this.data.find(i => i.name ===
+                                item.name).quote.USD.price *
+                                item.balance)
+                        }}</li>
                         <li class="flex">
                             <button class="btn green" @click="() => handleOpenBuyModal(item)">Buy</button>
                             <button class="btn red" @click="() => handleOpenSellModal(item)">Sell</button>
@@ -70,6 +73,7 @@ import PieChart from '../components/PieChart.vue';
 import InputComponent from '../components/InputComponent.vue';
 import Modal from '../components/Modal.vue';
 import ButtonComponent from '../components/ButtonComponent.vue';
+import axios from 'axios';
 
 export default {
     name: "WalletView",
@@ -94,9 +98,9 @@ export default {
                 currency: 'USD',
             }),
             wallet: [
-                { name: 'Bitcoin', balance: 15201.01 },
+                { name: 'Bitcoin', balance: 1.023 },
                 { name: 'USD Coin', balance: 10000.00 },
-                { name: 'Ethereum', balance: 1200.52 },
+                { name: 'Ethereum', balance: 48 },
                 { name: 'Cardano', balance: 600.95 }
             ]
         }
@@ -188,7 +192,23 @@ export default {
         },
         teste(event) {
             console.log(event)
+        },
+        async getData() {
+            try {
+                const data = await axios.get("http://localhost:3000/api/v1/cryptocurrency/listings/latest", {
+                    headers: {
+                        'X-CMC_PRO_API_KEY': '000470f2-3058-4f7a-88a8-b944668f4e89'
+                    }
+                })
+                this.data = data.data.data
+                console.log(this.data.find(i => i.name === 'Bitcoin').quote.USD.price)
+            } catch (error) {
+                console.log(error)
+            }
         }
+    },
+    mounted() {
+        this.getData()
     }
 }
 </script>
