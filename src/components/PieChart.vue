@@ -49,6 +49,6 @@ export default {
 
 <style scoped>
 #chart {
-    width: 550px;
+    width: 510px;
 }
 </style>
