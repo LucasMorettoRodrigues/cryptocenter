@@ -29,7 +29,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 import InputComponent from '../components/InputComponent.vue';
 import ButtonComponent from '../components/ButtonComponent.vue';
 
@@ -41,30 +40,17 @@ export default {
   },
   data() {
     return {
-      data: '',
       formatter: new Intl.NumberFormat('en-US', {
         style: 'currency',
         currency: 'USD',
       })
     }
   },
-  methods: {
-    async getData() {
-      try {
-        const data = await axios.get("http://localhost:3000/api/v1/cryptocurrency/listings/latest", {
-          headers: {
-            'X-CMC_PRO_API_KEY': '000470f2-3058-4f7a-88a8-b944668f4e89'
-          }
-        })
-        console.log(data.data)
-        this.data = data.data.data
-      } catch (error) {
-        console.log(error)
-      }
-    },
-  },
-  mounted() {
-    this.getData()
+  inject: ['getData'],
+  computed: {
+    data() {
+      return this.getData()
+    }
   }
 }
 </script>

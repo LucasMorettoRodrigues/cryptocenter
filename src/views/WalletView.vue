@@ -82,7 +82,6 @@ import InputComponent from '../components/InputComponent.vue';
 import SelectComponent from '../components/SelectComponent.vue';
 import Modal from '../components/Modal.vue';
 import ButtonComponent from '../components/ButtonComponent.vue';
-import axios from 'axios';
 
 export default {
     name: "WalletView",
@@ -103,7 +102,6 @@ export default {
             name: '',
             balance: 0,
             amount: 0,
-            data: '',
             formatter: new Intl.NumberFormat('en-US', {
                 style: 'currency',
                 currency: 'USD',
@@ -200,22 +198,13 @@ export default {
             this.name = coin.name
             this.balance = coin.balance
             this.showSellModal = true
-        },
-        async getData() {
-            try {
-                const data = await axios.get("http://localhost:3000/api/v1/cryptocurrency/listings/latest", {
-                    headers: {
-                        'X-CMC_PRO_API_KEY': '000470f2-3058-4f7a-88a8-b944668f4e89'
-                    }
-                })
-                this.data = data.data.data
-            } catch (error) {
-                console.log(error)
-            }
         }
     },
-    mounted() {
-        this.getData()
+    inject: ['getData'],
+    computed: {
+        data() {
+            return this.getData()
+        }
     }
 }
 </script>

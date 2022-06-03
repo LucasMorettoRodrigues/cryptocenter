@@ -1,7 +1,45 @@
-<script setup>
+<script>
 import { RouterView } from 'vue-router'
 import Navbar from './components/Navbar.vue'
 import FooterComponent from './components/FooterComponent.vue'
+import axios from 'axios'
+
+export default {
+  name: "App",
+  components: {
+    Navbar,
+    RouterView,
+    FooterComponent
+  },
+  data() {
+    return {
+      data: ''
+    }
+  },
+  methods: {
+    async getData() {
+      try {
+        const data = await axios.get("http://localhost:3000/api/v1/cryptocurrency/listings/latest", {
+          headers: {
+            'X-CMC_PRO_API_KEY': '000470f2-3058-4f7a-88a8-b944668f4e89'
+          }
+        })
+        this.data = data.data.data
+      } catch (error) {
+        console.log(error)
+      }
+    },
+  },
+  mounted() {
+    this.getData()
+  },
+  provide() {
+    return {
+      getData: () => this.data
+    }
+  }
+}
+
 </script>
 
 <template>
