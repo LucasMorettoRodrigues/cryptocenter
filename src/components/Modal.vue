@@ -1,14 +1,15 @@
-<script setup>
-
-const props = defineProps({
-    title: String
-})
-
+<script>
+export default {
+    props: ['title', 'open']
+}
 </script>
 
 <template>
-    <div class="modal-background flex align-center">
-        <div class="modal">
+    <transition name="back">
+        <div v-if="open" class="modal-background" @click="$emit('close')"></div>
+    </transition>
+    <transition name="modal">
+        <div v-if="open" class="modal">
             <div class="top flex align-center">
                 <div @click="$emit('close')" class="close-btn-container flex align-center justify-center">
                     <span class="close-btn">X</span>
@@ -19,7 +20,7 @@ const props = defineProps({
                 <slot />
             </div>
         </div>
-    </div>
+    </transition>
 </template>
 
 <style scoped>
@@ -29,15 +30,19 @@ const props = defineProps({
     left: 0;
     right: 0;
     bottom: 0;
-    z-index: 100;
+    z-index: 10;
     background-color: rgba(0, 0, 0, 0.705);
     justify-content: center;
 }
 
 .modal {
-    position: relative;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
     width: 400px;
     background-color: white;
+    z-index: 10;
 }
 
 .top {
@@ -63,5 +68,43 @@ const props = defineProps({
 
 .title {
     margin-bottom: 10px;
+}
+
+.back-enter-active {
+    animation: back .5s ease-in-out;
+}
+
+.back-leave-active {
+    animation: back .5s ease-in-out reverse;
+}
+
+@keyframes back {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+.modal-enter-active {
+    animation: modal .5s ease-in-out;
+}
+
+.modal-leave-active {
+    animation: modal .5s ease-in-out reverse;
+}
+
+@keyframes modal {
+    0% {
+        transform: translateX(150%) translateY(-50%) scale(0.5);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateX(-50%) translateY(-50%) scale(1);
+        opacity: 1;
+    }
 }
 </style>

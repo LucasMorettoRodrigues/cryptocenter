@@ -1,7 +1,7 @@
 <template>
     <main class="main-container">
 
-        <Modal v-if="showModal" title="Buy" @close="handleClose">
+        <Modal title="Buy" @close="handleClose" :open="showModal">
             <form @submit="handleBuy">
                 <SelectComponent label="Name" v-model="name" :options="this.data.map(i => i.name)" />
                 <InputComponent label="Amount" type="number" step="any" v-model="amount" />
@@ -11,7 +11,7 @@
             </form>
         </Modal>
 
-        <Modal v-if="showBuyModal" title="Buy" @close="handleClose">
+        <Modal title="Buy" @close="handleClose" :open="showBuyModal">
             <form @submit="handleBuy">
                 <SelectComponent label="Name" v-model="name" :options="this.data.map(i => i.name)" />
                 <InputComponent label="Amount" type="number" step="any" v-model="amount" />
@@ -21,7 +21,7 @@
             </form>
         </Modal>
 
-        <Modal v-if="showSellModal" title="Sell" @close="handleClose">
+        <Modal title="Sell" @close="handleClose" :open="showSellModal">
             <form @submit="handleSell">
                 <SelectComponent label="Name" v-model="name" :options="this.data.map(i => i.name)" />
                 <InputComponent label="Amount" type="number" step="any" v-model="amount" />
