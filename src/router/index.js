@@ -7,6 +7,11 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
+      redirect: '/market'
+    },
+    {
+      path: '/market',
+      name: 'market',
       component: HomeView
     },
     {
