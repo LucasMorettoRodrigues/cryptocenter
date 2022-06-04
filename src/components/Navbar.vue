@@ -13,7 +13,7 @@ import { RouterLink } from 'vue-router'
             <nav>
                 <ul class="flex align-items-center">
                     <li>
-                        <RouterLink to="/">Home</RouterLink>
+                        <RouterLink to="/">Market</RouterLink>
                     </li>
                     <li>
                         <RouterLink to="/wallet">Wallet</RouterLink>
@@ -32,14 +32,28 @@ header {
 
 a {
     padding: 10px;
+    margin: 0 10px;
+    font-size: 16px;
     color: white;
+    border-bottom: 1px solid transparent;
+    opacity: 0.9;
+    transition: all ease-in-out .3s
+}
+
+a:hover,
+a.router-link-active {
+    border-color: white;
+    opacity: 1;
 }
 
 li {
     margin-left: 10px;
 }
 
-.logo {
+.logo a {
     color: white;
+    font-size: 30px;
+    border-bottom: none;
+    opacity: 1;
 }
 </style>
