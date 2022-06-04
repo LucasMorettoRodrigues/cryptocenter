@@ -71,11 +71,11 @@ export default {
 }
 
 .back-enter-active {
-    animation: back .5s ease-in-out;
+    animation: back .5s ease-out;
 }
 
 .back-leave-active {
-    animation: back .5s ease-in-out reverse;
+    animation: back .5s ease-in reverse;
 }
 
 @keyframes back {
