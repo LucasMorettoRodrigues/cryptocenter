@@ -44,7 +44,11 @@ export default {
 
 <template>
   <Navbar />
-  <RouterView />
+  <RouterView v-slot="slotProps">
+    <transition name="route" mode="out-in">
+      <component :is="slotProps.Component"></component>
+    </transition>
+  </RouterView>
   <FooterComponent />
 </template>
 
@@ -93,5 +97,25 @@ a {
   border: 1px solid rgb(216, 216, 216);
   outline-color: lightblue;
   margin-bottom: 10px;
+}
+
+.route-enter-active {
+  animation: anim .5s ease-out;
+}
+
+.route-leave-active {
+  animation: anim .5s ease-in reverse;
+}
+
+@keyframes anim {
+  0% {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 </style>

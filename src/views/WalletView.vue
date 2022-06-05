@@ -53,7 +53,7 @@
                     <li>Balance (USD)</li>
                     <li></li>
                 </ul>
-                <ul class="wallet-list">
+                <transition-group tag="ul" class="wallet-list" name="wallet-list">
                     <li class="item-list" v-for="(item, index) in wallet" :key="index">
                         <ul class="item-info flex align-center">
                             <li class="name">{{ item.name }}</li>
@@ -68,7 +68,7 @@
                             </li>
                         </ul>
                     </li>
-                </ul>
+                </transition-group>
             </div>
 
         </section>
@@ -308,5 +308,25 @@ export default {
 
 .btn-container {
     margin-top: 5px;
+}
+
+.wallet-list-enter-active {
+    animation: list .5s ease-out;
+}
+
+.wallet-list-leave-active {
+    animation: list .5s ease-in reverse;
+}
+
+@keyframes list {
+    0% {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
 }
 </style>
