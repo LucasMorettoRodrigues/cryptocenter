@@ -3,7 +3,7 @@
     <section>
       <div class="flex">
         <HighlightsBox />
-        <div></div>
+        <HighlightsBox />
       </div>
       <h1>Market Cap</h1>
       <table class="coins-table">
