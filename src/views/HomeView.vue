@@ -2,7 +2,7 @@
   <main class="main-container">
     <section>
       <div class="flex">
-        <div class="highlight-container">
+        <div class="highlight-container" v-if="topGainers">
           <HighlightsBox title="Top Gainers" :list="topGainers" />
         </div>
         <div class="highlight-container">
@@ -62,37 +62,52 @@ export default {
       return this.getData()
     },
     topGainers() {
+      if (!this.data) {
+        return []
+      } else {
+        return this.getTopGainers()
+      }
+    },
+    topLosers() {
+      if (!this.data) {
+        return []
+      } else {
+        return this.getTopLosers()
+      }
+    }
+  },
+  methods: {
+    getTopGainers() {
       const list = []
       let name = ''
       let change = ''
-      const sorted = this.data.sort((a, b) =>
+      const sortedMaxChange = this.data.slice().sort((a, b) =>
         b.quote.USD.percent_change_24h - a.quote.USD.percent_change_24h
       )
 
       for (let i = 0; i < 3; i++) {
-        name = sorted[i].name
-        change = sorted[i].quote.USD.percent_change_24h.toFixed(2)
+        name = sortedMaxChange[i].name
+        change = sortedMaxChange[i].quote.USD.percent_change_24h.toFixed(2)
         list.push({ name, change })
       }
 
       return list
     },
-    topLosers() {
+    getTopLosers() {
       const list = []
       let name = ''
       let change = ''
-      const sorted = this.data.sort((a, b) =>
+      const sortedMinChange = this.data.slice().sort((a, b) =>
         a.quote.USD.percent_change_24h - b.quote.USD.percent_change_24h
       )
-
       for (let i = 0; i < 3; i++) {
-        name = sorted[i].name
-        change = sorted[i].quote.USD.percent_change_24h.toFixed(2)
+        name = sortedMinChange[i].name
+        change = sortedMinChange[i].quote.USD.percent_change_24h.toFixed(2)
         list.push({ name, change })
       }
 
       return list
-    },
+    }
   }
 }
 </script>
