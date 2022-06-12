@@ -2,8 +2,12 @@
   <main class="main-container">
     <section>
       <div class="flex">
-        <HighlightsBox />
-        <HighlightsBox />
+        <div class="highlight-container">
+          <HighlightsBox title="Top Gainers" :list="topGainers" />
+        </div>
+        <div class="highlight-container">
+          <HighlightsBox title="Top Losers" :list="topLosers" />
+        </div>
       </div>
       <h1>Market Cap</h1>
       <table class="coins-table">
@@ -56,7 +60,39 @@ export default {
   computed: {
     data() {
       return this.getData()
-    }
+    },
+    topGainers() {
+      const list = []
+      let name = ''
+      let change = ''
+      const sorted = this.data.sort((a, b) =>
+        b.quote.USD.percent_change_24h - a.quote.USD.percent_change_24h
+      )
+
+      for (let i = 0; i < 3; i++) {
+        name = sorted[i].name
+        change = sorted[i].quote.USD.percent_change_24h.toFixed(2)
+        list.push({ name, change })
+      }
+
+      return list
+    },
+    topLosers() {
+      const list = []
+      let name = ''
+      let change = ''
+      const sorted = this.data.sort((a, b) =>
+        a.quote.USD.percent_change_24h - b.quote.USD.percent_change_24h
+      )
+
+      for (let i = 0; i < 3; i++) {
+        name = sorted[i].name
+        change = sorted[i].quote.USD.percent_change_24h.toFixed(2)
+        list.push({ name, change })
+      }
+
+      return list
+    },
   }
 }
 </script>
@@ -109,5 +145,17 @@ table {
 
 .red {
   color: red;
+}
+
+.highlight-container {
+  flex: 1;
+}
+
+.highlight-container:first-child {
+  margin-right: 10px;
+}
+
+.highlight-container:last-child {
+  margin-left: 10px;
 }
 </style>
