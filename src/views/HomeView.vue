@@ -1,6 +1,10 @@
 <template>
   <main class="main-container">
     <section>
+      <div class="flex">
+        <HighlightsBox />
+        <div></div>
+      </div>
       <h1>Market Cap</h1>
       <table class="coins-table">
         <tr class="coins-table-tr">
@@ -31,12 +35,14 @@
 <script>
 import InputComponent from '../components/InputComponent.vue';
 import ButtonComponent from '../components/ButtonComponent.vue';
+import HighlightsBox from '../components/HighlightsBox.vue'
 
 export default {
   name: "HomeView",
   components: {
     InputComponent,
-    ButtonComponent
+    ButtonComponent,
+    HighlightsBox
   },
   data() {
     return {
